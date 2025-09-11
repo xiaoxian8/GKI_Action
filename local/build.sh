@@ -40,15 +40,10 @@ rm -rf ${DEFCONFIG_FILE}/android/abi_gki_protected_exports_*
 sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g'
 sed -i 's/ -dirty//g' ${KERNEL_DIR}/scripts/setlocalversion
 
-# ===== 拉取 KSU 并设置版本号 =====
+# ===== 拉取 KSU =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "y" ]]; then
     echo ">>> 拉取 SukiSU-Ultra 并设置版本..."
     curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
-    cd KernelSU
-    KSU_VERSION=$(expr $(/usr/bin/git rev-list --count main) "+" 10606)
-    export KSU_VERSION=$KSU_VERSION
-    sed -i "s/DKSU_VERSION=12800/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
-    cd ..
 else
     echo ">>> 拉取 KernelSU Next 并设置版本..."
     curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next
