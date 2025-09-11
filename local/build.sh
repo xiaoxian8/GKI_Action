@@ -6,10 +6,13 @@ sudo apt-get update
 sudo apt-get install -y \
     curl bison flex make binutils dwarves git lld pahole zip perl gcc python3 python-is-python3 \
     bc libssl-dev libelf-dev device-tree-compiler kmod
-    
+
+wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.1/LLVM-21.1.1-Linux-X64.tar.xz
+tar -Jxf LLVM-21.1.1-Linux-X64.tar.xz
+mv LLVM-21.1.1-Linux-X64 llvm21
 #自定义环境变量
 source local/build.env
-export PATH=${PWD}/llvm20/bin:${PATH}
+export PATH=${PWD}/llvm21/bin:${PATH}
 export OUT_DIR=${PWD}/out
 export KERNEL_DIR=${PWD}/common
 export DEFCONFIG_FILE=${KERNEL_DIR}/arch/arm64/configs/gki_defconfig
