@@ -25,7 +25,7 @@ git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
-patch -p1 ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
+patch -p1 -d ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
 
 # ===== KernelSU分支选择 =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
@@ -128,11 +128,11 @@ fi
 
 #应用hook补丁
 if [[ "$KSU_BRANCH" == "y" ]]; then
-    patch -p1 ${KERNEL_DIR} < SukiSU_patch/hooks/syscall_hooks.patch
-    patch -p1 ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
+    patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/hooks/syscall_hooks.patch
+    patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
 else
-    patch -p1 -F3 ${PWD}/KernelSU-Next/ < kernel_patches/susfs/android14-6.1-v1.5.9-ksunext-12823.patch
-    patch -p1 -F3 ${KERNEL_DIR} < kernel_patches/syscall_hook/min_scope_syscall_hooks_v1.4.patch
+    patch -p1 -F3 -d ${PWD}/KernelSU-Next/ < kernel_patches/susfs/android14-6.1-v1.5.9-ksunext-12823.patch
+    patch -p1 -F3 -d ${KERNEL_DIR} < kernel_patches/syscall_hook/min_scope_syscall_hooks_v1.4.patch
 fi
 
 # ===== 添加 BBR 等一系列拥塞控制算法 =====
