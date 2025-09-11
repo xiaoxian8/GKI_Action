@@ -183,7 +183,8 @@ args=(-j$(nproc --all)
 # ===== 开始编译 =====
 make ${args[@]} mrproper
 make ${args[@]} gki_defconfig
-make ${args[@]} Image.lz4
+make ${args[@]} Image.lz4 modules
+make ${args[@]} INSTALL_MOD_PATH=modules modules_install
 
 if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
