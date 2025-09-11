@@ -119,7 +119,7 @@ echo "CONFIG_IP6_NF_TARGET_MASQUERADE=y" >> "$DEFCONFIG_FILE"
 
 # ===== 是否启用ssg io调度 =====
 if [[ "$APPLY_SSG" == "y" || "$APPLY_SSG" == "Y" ]]; then
-    echo ">>> "正在打入ssg io补丁"
+    echo ">>> 正在打入ssg io补丁"
     patch -p1 -d ${KERNEL_DIR}< ssg_patch/ssg.patch
     cp ssg_patch/* ${KERNEL_DIR} -r
     echo "CONFIG_MQ_IOSCHED_SSG=y" >> "$DEFCONFIG_FILE"
