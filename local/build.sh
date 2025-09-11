@@ -38,8 +38,21 @@ fi
 # ===== 删除版本后缀 =====
 echo ">>> 删除内核版本后缀..."
 rm -rf ${KERNEL_DIR}/android/abi_gki_protected_exports_*
-sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g' ${DEFCONFIG_FILE}
-sed -i 's/ -dirty//g' ${KERNEL_DIR}/scripts/setlocalversion
+# 判断 CONFIG_ZRAM=m 是否存在
+if grep -q "^CONFIG_ZRAM=m" "$DEFCONFIG_FILE"; then
+    sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g' "$DEFCONFIG_FILE"
+    echo "已将 CONFIG_ZRAM=m 修改为 CONFIG_ZRAM=y"
+else
+    echo "CONFIG_ZRAM=m 不存在，不执行修改"
+fi
+
+# 判断是否有 -dirty
+if grep -q " -dirty" "$KERNEL_DIR/scripts/setlocalversion"; then
+    sed -i 's/ -dirty//g' "$KERNEL_DIR/scripts/setlocalversion"
+    echo "已删除 -dirty"
+else
+    echo "-dirty 不存在，不执行修改"
+fi
 
 # ===== 拉取 KSU =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "y" ]]; then
