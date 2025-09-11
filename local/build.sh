@@ -24,7 +24,7 @@ git clone https://gitlab.com/simonpunk/susfs4ksu.git -b ${GKI_VERSION} --depth=1
 git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
-cp ../susfs4ksu/kernel_patches/* ./ -r
+cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
 patch -p1 ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
 
 # ===== KernelSU分支选择 =====
@@ -36,8 +36,8 @@ fi
 
 # ===== 删除版本后缀 =====
 echo ">>> 删除内核版本后缀..."
-rm -rf ${DEFCONFIG_FILE}/android/abi_gki_protected_exports_*
-sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g'
+rm -rf ${KERNEL_DIR}/android/abi_gki_protected_exports_*
+sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g' ${DEFCONFIG_FILE}
 sed -i 's/ -dirty//g' ${KERNEL_DIR}/scripts/setlocalversion
 
 # ===== 拉取 KSU =====
