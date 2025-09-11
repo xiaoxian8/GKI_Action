@@ -7,9 +7,9 @@ sudo apt-get install -y \
     curl bison flex make binutils dwarves git lld pahole zip perl gcc python3 python-is-python3 \
     bc libssl-dev libelf-dev device-tree-compiler kmod
 
-wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.1/LLVM-21.1.1-Linux-X64.tar.xz
-tar -Jxf LLVM-21.1.1-Linux-X64.tar.xz
-mv LLVM-21.1.1-Linux-X64 llvm21
+wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
+tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
+mv LLVM-20.1.8-Linux-X64 llvm21
 #自定义环境变量
 source local/build.env
 export PATH=${PWD}/llvm21/bin:${PATH}
