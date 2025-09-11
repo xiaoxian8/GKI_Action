@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create build.env from workflow inputs
-        run: 
+        run: |
           BUILD_ENV="local/build.env"
           GKI_DEV="${{ github.event.inputs.GKI_DEV }}"
           if [[ "$GKI_DEV" == *-* ]]; then
