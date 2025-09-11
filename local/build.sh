@@ -19,18 +19,6 @@ export DEFCONFIG_FILE=${KERNEL_DIR}/arch/arm64/configs/gki_defconfig
 cp ../susfs4ksu/kernel_patches/* ./ -r
 patch -p1 ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
 
-# ===== 自动生成 GKI_VERSION =====
-# 自动生成 GKI_VERSION
-if [[ "$GKI_DEV" == *-* ]]; then
-    # 有后缀（比如 -2024-10），去掉最后一段
-    export GKI_VERSION="gki-${GKI_DEV%-*}"
-else
-    # 没有后缀，直接加 gki-
-    export GKI_VERSION="gki-${GKI_DEV}"
-fi
-echo "GKI_DEV=$GKI_DEV"
-echo "GKI_VERSION=$GKI_VERSION"
-
 #下载内核以及补丁
 git clone https://android.googlesource.com/kernel/common -b ${GKI_DEV} --depth=1
 git clone https://github.com/KernelSU-Next/kernel_patches.git --depth=1
