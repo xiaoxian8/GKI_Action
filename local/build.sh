@@ -25,6 +25,7 @@ git clone https://github.com/KernelSU-Next/kernel_patches.git --depth=1
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b ${GKI_VERSION} --depth=1
 git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
+git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 
 # ===== KernelSU分支选择 =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
