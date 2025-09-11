@@ -25,7 +25,7 @@ git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
-patch -p1 -d ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
+patch -p1 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_${GKI_VERSION}.patch
 
 # ===== KernelSU分支选择 =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
