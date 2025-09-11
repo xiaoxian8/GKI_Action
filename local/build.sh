@@ -28,13 +28,6 @@ echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
 patch -p1 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_${GKI_VERSION}.patch
 
-# ===== KernelSU分支选择 =====
-if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
-    KSU_TYPE="SukiSU Ultra"
-else
-    KSU_TYPE="KernelSU Next"
-fi
-
 # ===== 删除版本后缀 =====
 echo ">>> 删除内核版本后缀..."
 rm -rf ${KERNEL_DIR}/android/abi_gki_protected_exports_*
@@ -56,10 +49,10 @@ fi
 
 # ===== 拉取 KSU =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "y" ]]; then
-    echo ">>> 拉取 SukiSU-Ultra 并设置版本..."
+    echo ">>> 拉取 SukiSU-Ultra"
     curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
 else
-    echo ">>> 拉取 KernelSU Next 并设置版本..."
+    echo ">>> 拉取 KernelSU-Next"
     curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next
 fi
 
