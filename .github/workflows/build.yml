@@ -6,7 +6,7 @@ on:
       GKI_DEV:
         description: 'GKI 分支，例如 android14-6.1-2024-10 或 android14-6.1'
         required: true
-        default: 'android14-6.1'
+        default: 'android14-6.1-2024-10'
       KSU_BRANCH:
         description: '使用 SukiSU Ultra? (y/n)'
         required: true
@@ -33,12 +33,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create build.env from workflow inputs
-        run: |
-          mkdir -p local
+        run: 
           BUILD_ENV="local/build.env"
-
-          GKI_DEV_INPUT="${{ github.event.inputs.GKI_DEV }}"
-
+          GKI_DEV_INPUT="${{ github.event.inputs.GKI_DEV }}
           cat > $BUILD_ENV <<EOF
           GKI_DEV=${GKI_DEV_INPUT}
           GKI_VERSION=${GKI_VERSION}
@@ -46,7 +43,13 @@ jobs:
           APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
           APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
           APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+          if [[ "$GKI_DEV" == *-* ]]; then
+          export GKI_VERSION="gki-${GKI_DEV%-*}"
+          else
+          export GKI_VERSION="gki-${GKI_DEV}"
+          fi
           EOF
+
 
           echo ">>> build.env 内容:"
           cat $BUILD_ENV
