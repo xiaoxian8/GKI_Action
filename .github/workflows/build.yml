@@ -35,7 +35,7 @@ jobs:
       - name: Create build.env from workflow inputs
         run: 
           BUILD_ENV="local/build.env"
-          GKI_DEV="${{ github.event.inputs.GKI_DEV }}
+          GKI_DEV="${{ github.event.inputs.GKI_DEV }}"
           if [[ "$GKI_DEV" == *-* ]]; then
           export GKI_VERSION="gki-${GKI_DEV%-*}"
           else
