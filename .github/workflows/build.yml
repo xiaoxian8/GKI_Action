@@ -4,37 +4,64 @@ on:
   workflow_dispatch:
     inputs:
       GKI_DEV:
-        description: '内核分支名，例如 android14-6.1-2024-10 或 android14-6.1'
+        description: 'GKI 分支，例如 android14-6.1-2024-10 或 android14-6.1'
         required: true
         default: 'android14-6.1'
       KSU_BRANCH:
-        description: '是否使用 SukiSU Ultra (y/n)'
+        description: '使用 SukiSU Ultra? (y/n)'
         required: true
         default: 'y'
       APPLY_SSG:
-        description: '是否启用 SSG IO 调度 (y/n)'
+        description: '启用 SSG IO 调度? (y/n)'
         required: true
         default: 'y'
       APPLY_LZ4KD:
-        description: '是否启用 LZ4KD (y/n)'
+        description: '启用 LZ4KD? (y/n)'
         required: true
         default: 'y'
       APPLY_BBR:
-        description: '是否启用 BBR 拥塞控制 (y/n/d)'
+        description: '启用 BBR 拥塞控制? (y/n/d)'
         required: true
         default: 'd'
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-lasted
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup build.env from inputs
+      - name: Create build.env from workflow inputs
         run: |
           mkdir -p local
+          BUILD_ENV="local/build.env"
+
+          GKI_DEV_INPUT="${{ github.event.inputs.GKI_DEV }}"
+
+          # 自动生成 GKI_VERSION
+          if [[ "$GKI_DEV_INPUT" == *-* ]]; then
+              GKI_VERSION="gki-${GKI_DEV_INPUT%-*}"
+          else
+              GKI_VERSION="gki-${GKI_DEV_INPUT}"
+          fi
+
+          cat > $BUILD_ENV <<EOF
+GKI_DEV=${GKI_DEV_INPUT}
+GKI_VERSION=${GKI_VERSION}
+KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
+APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
+APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
+APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+EOF
+
+          echo ">>> build.env 内容:"
+          cat $BUILD_ENV
+
+      - name: Run build.sh
+        run: |
+          chmod +x build.sh
+          ./build.sh          mkdir -p local
           BUILD_ENV="local/build.env"
 
           cat > $BUILD_ENV <<EOF
