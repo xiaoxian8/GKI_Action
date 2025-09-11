@@ -16,8 +16,6 @@ export PATH=${PWD}/llvm21/bin:${PATH}
 export OUT_DIR=${PWD}/out
 export KERNEL_DIR=${PWD}/common
 export DEFCONFIG_FILE=${KERNEL_DIR}/arch/arm64/configs/gki_defconfig
-cp ../susfs4ksu/kernel_patches/* ./ -r
-patch -p1 ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
 
 #下载内核以及补丁
 git clone https://android.googlesource.com/kernel/common -b ${GKI_DEV} --depth=1
@@ -26,6 +24,8 @@ git clone https://gitlab.com/simonpunk/susfs4ksu.git -b ${GKI_VERSION} --depth=1
 git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
+cp ../susfs4ksu/kernel_patches/* ./ -r
+patch -p1 ${KERNEL_DIR} < $(find -name ${PWD}/susfs4ksu/kernel_patches/50_add_susfs*.patch)
 
 # ===== KernelSU分支选择 =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
