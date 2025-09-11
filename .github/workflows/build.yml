@@ -53,7 +53,7 @@ jobs:
           APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
           APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
           APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
-EOF
+          EOF
 
           echo ">>> build.env 内容:"
           cat $BUILD_ENV
@@ -65,30 +65,17 @@ EOF
           BUILD_ENV="local/build.env"
 
           cat > $BUILD_ENV <<EOF
-GKI_DEV=${{ github.event.inputs.GKI_DEV }}
-KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
-APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
-APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
-APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
-RE_KERNEL=y
-LLVM_BIN=${PWD}/llvm20/bin
-OUT_DIR=${PWD}/out
-KERNEL_DIR=${PWD}/common
-DEFCONFIG_FILE=${PWD}/common/arch/arm64/configs/gki_defconfig
-CROSS_COMPILE=
-MAKE_JOBS=$(nproc)
-EOF
+          GKI_DEV=${{ github.event.inputs.GKI_DEV }}
+          KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
+          APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
+          APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
+          APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+          RE_KERNEL=y
+          EOF
 
           echo ">>> build.env 内容:"
           cat $BUILD_ENV
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            curl bison flex make binutils dwarves git lld pahole zip perl gcc python3 python-is-python3 \
-            bc libssl-dev libelf-dev device-tree-compiler kmod
-
+          
       - name: Run kernel build
         run: |
           chmod +x build.sh
