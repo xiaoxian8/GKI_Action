@@ -15,8 +15,8 @@ on:
         description: '启用 SSG IO 调度? (y/n)'
         required: true
         default: 'y'
-      APPLY_LZ4KD:
-        description: '启用 LZ4KD? (y/n)'
+      APPLY_REKERNEL:
+        description: '启用 RE-KERNEL? (y/n)'
         required: true
         default: 'y'
       APPLY_BBR:
@@ -46,7 +46,7 @@ jobs:
           GKI_VERSION=${GKI_VERSION}
           KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
           APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
-          APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
+          APPLY_REKERNEL=${{ github.event.inputs.APPLY_REKERNEL }}
           APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
           EOF
 
