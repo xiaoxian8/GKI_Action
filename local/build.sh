@@ -191,10 +191,10 @@ if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
     ./SukiSU_patch/kpm/patch_linux
     mv -v oImage AnyKernel3/Image
     cd AnyKernel3
-    zip -r9v ../out/kernel.zip *
+    zip -r9v ${OUT_DIR}/kernel.zip *
 else
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
     mv -v Image AnyKernel3/Image
     cd AnyKernel3
-    zip -r9v ../out/kernel.zip *
+    zip -r9v ${OUT_DIR}/kernel.zip *
 fi
