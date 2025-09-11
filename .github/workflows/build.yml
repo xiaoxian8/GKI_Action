@@ -23,6 +23,10 @@ on:
         description: '启用 BBR 拥塞控制? (y/n/d)'
         required: true
         default: 'd'
+      APPLY_KPM:
+        description: '启用 BBR 拥塞控制? (y/n)'
+        required: true
+        default: 'y'
 
 jobs:
   build:
@@ -48,6 +52,7 @@ jobs:
           APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
           APPLY_REKERNEL=${{ github.event.inputs.APPLY_REKERNEL }}
           APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+          APPLY_KPM=${{ github.event.inputs.APPLY_KPM }}
           EOF
 
           echo ">>> build.env 内容:"
