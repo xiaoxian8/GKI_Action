@@ -38,10 +38,10 @@ fi
 echo ">>> 删除内核版本后缀..."
 rm -rf ${DEFCONFIG_FILE}/android/abi_gki_protected_exports_*
 sed -i 's/CONFIG_ZRAM=m/CONFIG_ZRAM=y/g'
-sed -i 's/ -dirty//g' scripts/setlocalversion
+sed -i 's/ -dirty//g' ${KERNEL_DIR}/scripts/setlocalversion
 
 # ===== 拉取 KSU 并设置版本号 =====
-if [[ "$KSU_BRANCH" == "y" ]]; then
+if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "y" ]]; then
     echo ">>> 拉取 SukiSU-Ultra 并设置版本..."
     curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-main
     cd KernelSU
@@ -74,6 +74,7 @@ CONFIG_KSU_SUSFS_ENABLE_LOG=y
 CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y
 CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y
 CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
+CONFIG_LOCALVERSION="-xiaoxian
 EOF
 echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$DEFCONFIG_FILE"
 echo "CONFIG_KSU_SUSFS_SUS_SU=n" >>  "$DEFCONFIG_FILE"
@@ -132,6 +133,7 @@ cp SukiSU_patch/other/zram/lz4k/* ${KERNEL_DIR} -r
 cp SukiSU_patch/other/zram/lz4k_oplus ${KERNEL_DIR}/lib -r
 else
     echo ">>> 没有启用lz4kd"
+    echo "CONFIG_ZRAM_DEF_COMP_LZ4=y" >> "${DEFCONFIG_FILE}"
 fi
 
 #应用hook补丁
