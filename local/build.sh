@@ -135,8 +135,9 @@ if [[ "$KSU_BRANCH" == "y" ]]; then
     patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
 else
     echo ">>> 正在打入ksun hook补丁"
-    patch -p1 -F3 -d ${PWD}/KernelSU-Next/ < kernel_patches/susfs/android14-6.1-v1.5.9-ksunext-12823.patch
     patch -p1 -F3 -d ${KERNEL_DIR} < kernel_patches/syscall_hook/min_scope_syscall_hooks_v1.4.patch
+    echo ">>> 正在打入ksun susfs补丁"
+    patch -p1 -F3 -d ${PWD}/KernelSU-Next < kernel_patches/susfs/android14-6.1-v1.5.9-ksunext-12823.patch
 fi
 
 # ===== 添加 BBR 等一系列拥塞控制算法 =====
