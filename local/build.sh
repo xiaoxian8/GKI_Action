@@ -27,7 +27,6 @@ git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
 patch -p1 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_${GKI_VERSION}.patch
-echo "打入成功"
 
 # ===== KernelSU分支选择 =====
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
@@ -120,6 +119,7 @@ echo "CONFIG_IP6_NF_TARGET_MASQUERADE=y" >> "$DEFCONFIG_FILE"
 
 # ===== 是否启用ssg io调度 =====
 if [[ "$APPLY_SSG" == "y" || "$APPLY_SSG" == "Y" ]]; then
+    echo ">>> "正在打入ssg io补丁"
     patch -p1 -d ${KERNEL_DIR}< ssg_patch/ssg.patch
     cp ssg_patch/* ${KERNEL_DIR} -r
     echo "CONFIG_MQ_IOSCHED_SSG=y" >> "$DEFCONFIG_FILE"
@@ -130,9 +130,11 @@ fi
 
 #应用hook补丁
 if [[ "$KSU_BRANCH" == "y" ]]; then
+    echo ">>> 正在打入sukisu hook补丁"
     patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/hooks/syscall_hooks.patch
     patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
 else
+    echo ">>> 正在打入ksun hook补丁
     patch -p1 -F3 -d ${PWD}/KernelSU-Next/ < kernel_patches/susfs/android14-6.1-v1.5.9-ksunext-12823.patch
     patch -p1 -F3 -d ${KERNEL_DIR} < kernel_patches/syscall_hook/min_scope_syscall_hooks_v1.4.patch
 fi
