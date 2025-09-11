@@ -158,13 +158,6 @@ if [[ "$APPLY_BBR" == "y" || "$APPLY_BBR" == "Y" || "$APPLY_BBR" == "d" || "$APP
   fi
 fi
 
-
-# ===== 启用Re-Kernel =====
-if [[ "$APPLY_REKERNEL" == "y" || "$APPLY_REKERNEL" == "Y" ]]; then
-  echo ">>> 正在启用Re-Kernel..."
-  echo "CONFIG_REKERNEL=y" >> "$DEFCONFIG_FILE"
-fi
-
 # ===== 编译参数 =====
 args=(-j$(nproc --all)
     O=${OUT_DIR}
