@@ -165,10 +165,6 @@ if [[ "$APPLY_REKERNEL" == "y" || "$APPLY_REKERNEL" == "Y" ]]; then
   echo "CONFIG_REKERNEL=y" >> "$DEFCONFIG_FILE"
 fi
 
-# ===== 启用kpm =====
-if [[ "$USE_PATCH_LINUX" == "y" || "$USE_PATCH_LINUX" == "Y" ]]; then
-  echo "CONFIG_KPM=y" >> "$DEFCONFIG_FILE"
-fi
 # ===== 编译参数 =====
 args=(-j$(nproc --all)
     O=${OUT_DIR}
