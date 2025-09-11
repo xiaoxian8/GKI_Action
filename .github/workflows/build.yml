@@ -24,7 +24,7 @@ on:
         required: true
         default: 'd'
       APPLY_KPM:
-        description: '启用 BBR 拥塞控制? (y/n)'
+        description: '启用 KPM ? (y/n)'
         required: true
         default: 'y'
 
