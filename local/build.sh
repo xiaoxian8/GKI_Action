@@ -48,12 +48,10 @@ if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "y" ]]; then
     KSU_VERSION=$(expr $(/usr/bin/git rev-list --count main) "+" 10606)
     export KSU_VERSION=$KSU_VERSION
     sed -i "s/DKSU_VERSION=12800/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
+    cd ..
 else
     echo ">>> 拉取 KernelSU Next 并设置版本..."
     curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next
-    cd KernelSU-Next
-    KSU_VERSION=$(expr $(curl -sI "https://api.github.com/repos/pershoot/KernelSU-Next/commits?sha=next&per_page=1" | grep -i "link:" | sed -n 's/.*page=\([0-9]*\)>; rel="last".*/\1/p') "+" 10200)
-    sed -i "s/DKSU_VERSION=11998/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
 fi
 
 # ===== KernelSU默认配置 =====
