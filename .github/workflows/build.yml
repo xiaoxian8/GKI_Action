@@ -39,13 +39,6 @@ jobs:
 
           GKI_DEV_INPUT="${{ github.event.inputs.GKI_DEV }}"
 
-          # 自动生成 GKI_VERSION
-          if [[ "$GKI_DEV_INPUT" == *-* ]]; then
-              GKI_VERSION="gki-${GKI_DEV_INPUT%-*}"
-          else
-              GKI_VERSION="gki-${GKI_DEV_INPUT}"
-          fi
-
           cat > $BUILD_ENV <<EOF
           GKI_DEV=${GKI_DEV_INPUT}
           GKI_VERSION=${GKI_VERSION}
@@ -60,32 +53,5 @@ jobs:
 
       - name: Run build.sh
         run: |
-          chmod +x build.sh
-          ./build.sh          mkdir -p local
-          BUILD_ENV="local/build.env"
-
-          cat > $BUILD_ENV <<EOF
-          GKI_DEV=${{ github.event.inputs.GKI_DEV }}
-          KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
-          APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
-          APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
-          APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
-          RE_KERNEL=y
-          EOF
-
-          echo ">>> build.env 内容:"
-          cat $BUILD_ENV
-          
-      - name: Run kernel build
-        run: |
-          chmod +x build.sh
-          ./build.sh
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: kernel-build
-          path: |
-            artifacts/*
-            *.zip
-            out/arch/arm64/boot/Image*
+          chmod +x local/build.sh
+          ./local/build.sh
