@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -euo pipefail
 #安装依赖环境
 # 安装依赖环境
 sudo apt-get update
