@@ -74,7 +74,8 @@ CONFIG_KSU_SUSFS_ENABLE_LOG=y
 CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y
 CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y
 CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
-CONFIG_LOCALVERSION="-xiaoxian
+CONFIG_LOCALVERSION="-xiaoxian"
+echo "CONFIG_ZRAM_DEF_COMP_LZ4=y
 EOF
 echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$DEFCONFIG_FILE"
 echo "CONFIG_KSU_SUSFS_SUS_SU=n" >>  "$DEFCONFIG_FILE"
@@ -124,16 +125,6 @@ if [[ "$APPLY_SSG" == "y" || "$APPLY_SSG" == "Y" ]]; then
     echo "CONFIG_MQ_IOSCHED_SSG_CGROUP=y" >> "$DEFCONFIG_FILE"
 else
 echo ">>>没有启用ssg io调度"
-fi
-
-if [[ "$APPLY_LZ4KD" == "y" || "$APPLY_LZ4KD" == "Y" ]]; then
-patch -p1 -F3 ${KERNEL_DIR} < SukiSU_patch/other/zram/zram_patch/6.1/lz4kd.patch
-patch -p1 -F3 ${KERNEL_DIR} < SukiSU_patch/other/zram/zram_patch/6.1/lz4k_oplus.patch
-cp SukiSU_patch/other/zram/lz4k/* ${KERNEL_DIR} -r
-cp SukiSU_patch/other/zram/lz4k_oplus ${KERNEL_DIR}/lib -r
-else
-    echo ">>> 没有启用lz4kd"
-    echo "CONFIG_ZRAM_DEF_COMP_LZ4=y" >> "${DEFCONFIG_FILE}"
 fi
 
 #应用hook补丁
