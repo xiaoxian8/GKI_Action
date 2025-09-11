@@ -35,18 +35,19 @@ jobs:
       - name: Create build.env from workflow inputs
         run: 
           BUILD_ENV="local/build.env"
-          cat > $BUILD_ENV <<EOF
           GKI_DEV="${{ github.event.inputs.GKI_DEV }}
-          GKI_VERSION=${GKI_VERSION}
-          KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
-          APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
-          APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
-          APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
           if [[ "$GKI_DEV" == *-* ]]; then
           export GKI_VERSION="gki-${GKI_DEV%-*}"
           else
           export GKI_VERSION="gki-${GKI_DEV}"
           fi
+          cat > $BUILD_ENV <<EOF
+          GKI_VERSION=${GKI_VERSION}
+          KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
+          APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
+          APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
+          APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+          GKI_VERSION=${GKI_VERSION}
           EOF
 
 
