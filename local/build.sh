@@ -129,7 +129,7 @@ echo ">>>没有启用ssg io调度"
 fi
 
 #应用hook补丁
-if [[ "$KSU_BRANCH" == "y" ]]; then
+if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
     echo ">>> 正在打入sukisu hook补丁"
     patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/hooks/syscall_hooks.patch
     patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
