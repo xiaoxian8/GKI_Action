@@ -47,12 +47,12 @@ jobs:
           fi
 
           cat > $BUILD_ENV <<EOF
-GKI_DEV=${GKI_DEV_INPUT}
-GKI_VERSION=${GKI_VERSION}
-KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
-APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
-APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
-APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+          GKI_DEV=${GKI_DEV_INPUT}
+          GKI_VERSION=${GKI_VERSION}
+          KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
+          APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
+          APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
+          APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
 EOF
 
           echo ">>> build.env 内容:"
