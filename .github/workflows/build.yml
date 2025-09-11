@@ -1,1 +1,77 @@
+name: Kernel Build
 
+on:
+  workflow_dispatch:
+    inputs:
+      GKI_DEV:
+        description: '内核分支名，例如 android14-6.1-2024-10 或 android14-6.1'
+        required: true
+        default: 'android14-6.1'
+      KSU_BRANCH:
+        description: '是否使用 SukiSU Ultra (y/n)'
+        required: true
+        default: 'y'
+      APPLY_SSG:
+        description: '是否启用 SSG IO 调度 (y/n)'
+        required: true
+        default: 'y'
+      APPLY_LZ4KD:
+        description: '是否启用 LZ4KD (y/n)'
+        required: true
+        default: 'y'
+      APPLY_BBR:
+        description: '是否启用 BBR 拥塞控制 (y/n/d)'
+        required: true
+        default: 'd'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup build.env from inputs
+        run: |
+          mkdir -p local
+          BUILD_ENV="local/build.env"
+
+          cat > $BUILD_ENV <<EOF
+GKI_DEV=${{ github.event.inputs.GKI_DEV }}
+KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
+APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
+APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
+APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
+RE_KERNEL=y
+LLVM_BIN=${PWD}/llvm20/bin
+OUT_DIR=${PWD}/out
+KERNEL_DIR=${PWD}/common
+DEFCONFIG_FILE=${PWD}/common/arch/arm64/configs/gki_defconfig
+CROSS_COMPILE=
+MAKE_JOBS=$(nproc)
+EOF
+
+          echo ">>> build.env 内容:"
+          cat $BUILD_ENV
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            curl bison flex make binutils dwarves git lld pahole zip perl gcc python3 python-is-python3 \
+            bc libssl-dev libelf-dev device-tree-compiler kmod
+
+      - name: Run kernel build
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kernel-build
+          path: |
+            artifacts/*
+            *.zip
+            out/arch/arm64/boot/Image*
