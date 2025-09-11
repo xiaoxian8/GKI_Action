@@ -34,17 +34,21 @@ jobs:
 
       - name: Create build.env from workflow inputs
         run: |
+          mkdir -p local
           BUILD_ENV="local/build.env"
+          GKI_DEV="${{ github.event.inputs.GKI_DEV }}"
+
+          # 提取前两段生成 GKI_VERSION
           GKI_VERSION="gki-$(echo $GKI_DEV | cut -d'-' -f1-2)"
+
           cat > $BUILD_ENV <<EOF
+          GKI_DEV=${GKI_DEV}
           GKI_VERSION=${GKI_VERSION}
           KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
           APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
           APPLY_LZ4KD=${{ github.event.inputs.APPLY_LZ4KD }}
           APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
-          GKI_VERSION=${GKI_VERSION}
           EOF
-
 
           echo ">>> build.env 内容:"
           cat $BUILD_ENV
