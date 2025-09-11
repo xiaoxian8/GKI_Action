@@ -91,6 +91,12 @@ CONFIG_LTO_CLANG_THIN=y
 CONFIG_LTO=y
 EOF
 
+# ===== 启用kpm =====
+if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
+    echo "CONFIG_KPM=y" >> "$DEFCONFIG_FILE"
+else
+    echo "没有开启kpm"
+fi
 # ===== 添加网络优化 =====
 echo ">>> 正在启用网络功能增强优化配置..."
 echo "CONFIG_BPF_STREAM_PARSER=y" >> "$DEFCONFIG_FILE"
@@ -182,7 +188,7 @@ make ${args[@]} mrproper
 make ${args[@]} gki_defconfig
 make ${args[@]} Image.lz4
 
-if [[ "$USE_PATCH_LINUX" == "y" || "$USE_PATCH_LINUX" == "Y" ]]; then
+if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
     chmod +x SukiSU_patch/kpm/patch_linux
     ./SukiSU_patch/kpm/patch_linux
