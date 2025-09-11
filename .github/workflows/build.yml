@@ -15,10 +15,6 @@ on:
         description: '启用 SSG IO 调度? (y/n)'
         required: true
         default: 'y'
-      APPLY_REKERNEL:
-        description: '启用 RE-KERNEL? (y/n)'
-        required: true
-        default: 'y'
       APPLY_BBR:
         description: '启用 BBR 拥塞控制? (y/n/d)'
         required: true
