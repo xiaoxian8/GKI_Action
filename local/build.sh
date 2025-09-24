@@ -148,8 +148,8 @@ fi
 #应用hook补丁
 if [[ "$KSU_BRANCH" == "y" || "$KSU_BRANCH" == "Y" ]]; then
     echo ">>> 正在打入sukisu hook补丁"
-    patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/hooks/syscall_hooks.patch
-    patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
+    patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/hooks/sukisu_tracepoint_hooks_v1.1.patch
+    #patch -p1 -d ${KERNEL_DIR} < SukiSU_patch/69_hide_stuff.patch
 else
     echo ">>> 正在打入ksun hook补丁"
     patch -p1 -F3 -d ${KERNEL_DIR} < kernel_patches/syscall_hook/min_scope_syscall_hooks_v1.5.patch
