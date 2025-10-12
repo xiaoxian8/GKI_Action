@@ -199,8 +199,8 @@ make ${args[@]} INSTALL_MOD_PATH=modules modules_install
 
 if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
-    chmod +x SukiSU_patch/kpm/patch_linux
-    ./SukiSU_patch/kpm/patch_linux
+    chmod +x ../SukiSU_patch/kpm/patch_linux
+    ../SukiSU_patch/kpm/patch_linux
     mv -v oImage ${AK_DIR}/Image
     cd ${AK_DIR}
     zip -r9v ${OUT_DIR}/kernel.zip *
