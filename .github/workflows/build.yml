@@ -23,6 +23,10 @@ on:
         description: '启用 KPM ? (y/n)'
         required: true
         default: 'y'
+      APPLY_BBG:
+        description: '启用 BBG 基带保护 ? (y/n)'
+        required: true
+        default: 'y'
 
 jobs:
   build:
