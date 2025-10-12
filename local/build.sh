@@ -87,6 +87,7 @@ CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y
 CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
 CONFIG_ZRAM_DEF_COMP_LZ4=y
 CONFIG_LOCALVERSION="-xiaoxian"
+CONFIG_BBG=y
 EOF
 echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$DEFCONFIG_FILE"
 echo "CONFIG_KSU_SUSFS_SUS_SU=n" >>  "$DEFCONFIG_FILE"
@@ -178,7 +179,6 @@ fi
 # ===== 编译参数 =====
 args=(-j$(nproc --all)
     O=${OUT_DIR}
-    -C ${KERNEL_DIR}
     ARCH=arm64
     CROSS_COMPILE=aarch64-linux-gnu-
     CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
@@ -186,6 +186,9 @@ args=(-j$(nproc --all)
     LLVM_IAS=1
     DEPMOD=depmod
     DTC=dtc )
+    
+cd ${KERNEL_DIR}
+wget -O- https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh | bash
 
 # ===== 开始编译 =====
 make ${args[@]} mrproper
