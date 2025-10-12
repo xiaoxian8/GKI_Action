@@ -17,6 +17,7 @@ export PATH=${PWD}/llvm21/bin:${PATH}
 export OUT_DIR=${PWD}/out
 export KERNEL_DIR=${PWD}/common
 export DEFCONFIG_FILE=${KERNEL_DIR}/arch/arm64/configs/gki_defconfig
+export AK_DIR=${PWD}/AnyKernel3
 
 #===== 下载内核以及补丁 =====
 git clone https://android.googlesource.com/kernel/common -b ${GKI_DEV} --depth=1
@@ -200,12 +201,12 @@ if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
     chmod +x SukiSU_patch/kpm/patch_linux
     ./SukiSU_patch/kpm/patch_linux
-    mv -v oImage AnyKernel3/Image
-    cd AnyKernel3
+    mv -v oImage ${AK_DIR}/Image
+    cd ${AK_DIR}
     zip -r9v ${OUT_DIR}/kernel.zip *
 else
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
-    mv -v Image AnyKernel3/Image
-    cd AnyKernel3
+    mv -v Image ${AK_DIR}/Image
+    cd ${AK_DIR}
     zip -r9v ${OUT_DIR}/kernel.zip *
 fi
