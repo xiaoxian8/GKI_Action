@@ -52,6 +52,7 @@ jobs:
           APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
           APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
           APPLY_KPM=${{ github.event.inputs.APPLY_KPM }}
+          APPLY_BBG=${{ github.event.inputs.APPLY_BBG }}
           EOF
 
           echo ">>> build.env 内容:"
