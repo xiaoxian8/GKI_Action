@@ -88,7 +88,6 @@ CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y
 CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
 CONFIG_ZRAM_DEF_COMP_LZ4=y
 CONFIG_LOCALVERSION="-xiaoxian"
-CONFIG_BBG=y
 EOF
 echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$DEFCONFIG_FILE"
 echo "CONFIG_KSU_SUSFS_SUS_SU=n" >>  "$DEFCONFIG_FILE"
@@ -110,6 +109,36 @@ if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
 else
     echo "没有开启kpm"
 fi
+
+if [[ "$APPLY_BBG" == "y" || "$APPLY_BBG" == "Y" ]]; then
+  echo ">>> 正在启用内核级基带保护..."
+  echo "CONFIG_BBG=y" >> "$DEFCONFIG_FILE"
+  wget https://github.com/cctv18/Baseband-guard/archive/refs/heads/master.zip
+  unzip -q master.zip
+  mv "Baseband-guard-master" ${KERNEL_DIR}/security/baseband-guard
+  printf '\nobj-$(CONFIG_BBG) += baseband-guard/\n' >> ${KERNEL_DIR}/security/Makefile
+  sed -i '/^config LSM$/,/^help$/{ /^[[:space:]]*default/ { /baseband_guard/! s/landlock/landlock,baseband_guard/ } }' ${KERNEL_DIR}/security/Kconfig
+  awk '
+  /endmenu/ { last_endmenu_line = NR }
+  { lines[NR] = $0 }
+  END {
+    for (i=1; i<=NR; i++) {
+      if (i == last_endmenu_line) {
+        sub(/endmenu/, "", lines[i]);
+        print lines[i] "source \"security/baseband-guard/Kconfig\""
+        print ""
+        print "endmenu"
+      } else {
+          print lines[i]
+      }
+    }
+  }
+  ' ${KERNEL_DIR}/security/Kconfig > ${KERNEL_DIR}/security/Kconfig.tmp && mv ${KERNEL_DIR}/security/Kconfig.tmp ${KERNEL_DIR}/security/Kconfig
+  sed -i 's/selinuxfs.o //g' "${KERNEL_DIR}/security/selinux/Makefile"
+  sed -i 's/hooks.o //g' "${KERNEL_DIR}/security/selinux/Makefile"
+  cat "${KERNEL_DIR}/security/baseband-guard/sepatch.txt" >> "${KERNEL_DIR}/security/selinux/Makefile"
+fi
+
 # ===== 添加网络优化 =====
 echo ">>> 正在启用网络功能增强优化配置..."
 echo "CONFIG_BPF_STREAM_PARSER=y" >> "$DEFCONFIG_FILE"
@@ -180,6 +209,7 @@ fi
 # ===== 编译参数 =====
 args=(-j$(nproc --all)
     O=${OUT_DIR}
+    -C ${KERNEL_DIR}
     ARCH=arm64
     CROSS_COMPILE=aarch64-linux-gnu-
     CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
@@ -188,9 +218,6 @@ args=(-j$(nproc --all)
     DEPMOD=depmod
     DTC=dtc )
     
-cd ${KERNEL_DIR}
-wget -O- https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh | bash
-
 # ===== 开始编译 =====
 make ${args[@]} mrproper
 make ${args[@]} gki_defconfig
@@ -199,8 +226,8 @@ make ${args[@]} INSTALL_MOD_PATH=modules modules_install
 
 if [[ "$APPLY_KPM" == "y" || "$APPLY_KPM" == "Y" ]]; then
     mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
-    chmod +x ../SukiSU_patch/kpm/patch_linux
-    ../SukiSU_patch/kpm/patch_linux
+    chmod +x SukiSU_patch/kpm/patch_linux
+    ./SukiSU_patch/kpm/patch_linux
     mv -v oImage ${AK_DIR}/Image
     cd ${AK_DIR}
     zip -r9v ${OUT_DIR}/kernel.zip *
