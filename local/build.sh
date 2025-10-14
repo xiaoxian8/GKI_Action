@@ -111,32 +111,8 @@ else
 fi
 
 if [[ "$APPLY_BBG" == "y" || "$APPLY_BBG" == "Y" ]]; then
-  echo ">>> 正在启用内核级基带保护..."
-  echo "CONFIG_BBG=y" >> "$DEFCONFIG_FILE"
-  wget https://github.com/vc-teahouse/Baseband-guard/archive/refs/heads/main.zip
-  unzip -q main.zip
-  mv "Baseband-guard-main" ${KERNEL_DIR}/security/baseband-guard
-  printf '\nobj-$(CONFIG_BBG) += baseband-guard/\n' >> ${KERNEL_DIR}/security/Makefile
-  sed -i '/^config LSM$/,/^help$/{ /^[[:space:]]*default/ { /baseband_guard/! s/landlock/landlock,baseband_guard/ } }' ${KERNEL_DIR}/security/Kconfig
-  awk '
-  /endmenu/ { last_endmenu_line = NR }
-  { lines[NR] = $0 }
-  END {
-    for (i=1; i<=NR; i++) {
-      if (i == last_endmenu_line) {
-        sub(/endmenu/, "", lines[i]);
-        print lines[i] "source \"security/baseband-guard/Kconfig\""
-        print ""
-        print "endmenu"
-      } else {
-          print lines[i]
-      }
-    }
-  }
-  ' ${KERNEL_DIR}/security/Kconfig > ${KERNEL_DIR}/security/Kconfig.tmp && mv ${KERNEL_DIR}/security/Kconfig.tmp ${KERNEL_DIR}/security/Kconfig
-  sed -i 's/selinuxfs.o //g' "${KERNEL_DIR}/security/selinux/Makefile"
-  sed -i 's/hooks.o //g' "${KERNEL_DIR}/security/selinux/Makefile"
-  cat "${KERNEL_DIR}/security/baseband-guard/sepatch.txt" >> "${KERNEL_DIR}/security/selinux/Makefile"
+  wget -O- https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh | bash
+  sed -i '/^config LSM$/,/^help$/{ /^[[:space:]]*default/ { /baseband_guard/! s/landlock/landlock,baseband_guard/ } }' security/Kconfig
 fi
 
 # ===== 添加网络优化 =====
