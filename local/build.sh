@@ -218,7 +218,7 @@ args=(-j$(nproc --all)
     DTC=dtc )
     
 # ===== 开始编译 =====
-make ${args[@]} mrproper
+#make ${args[@]} mrproper
 make ${args[@]} gki_defconfig
 make ${args[@]} Image.lz4 modules
 make ${args[@]} INSTALL_MOD_PATH=modules modules_install
