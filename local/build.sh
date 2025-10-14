@@ -111,6 +111,7 @@ else
 fi
 
 if [[ "$APPLY_BBG" == "y" || "$APPLY_BBG" == "Y" ]]; then
+  cd ${KERNEL_DIR}
   wget -O- https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh | bash
   sed -i '/^config LSM$/,/^help$/{ /^[[:space:]]*default/ { /baseband_guard/! s/landlock/landlock,baseband_guard/ } }' security/Kconfig
 fi
