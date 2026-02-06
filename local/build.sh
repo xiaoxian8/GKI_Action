@@ -37,6 +37,11 @@ patch -p1 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-androi
 curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
 patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 
+patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
+cp ssg_patch/* ${KERNEL_DIR} -r
+
+patch -p1 -d ${KERNEL_DIR} < Unicode_bypass_Fix/unicode-bypass_fix_5.10-6.12通用.patch
+
 #添加LTO优化
 echo ">>> 添加LTO优化..."
 cat >> "${DEFCONFIG_FILE}" <<EOF
