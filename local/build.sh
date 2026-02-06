@@ -102,7 +102,7 @@ CONFIG_IP6_NF_TARGET_MASQUERADE=y
 EOF
 
 #编译参数
-args=(-j4
+args=(-j$(nproc --all)
 	O=${OUT_DIR}
 	-C ${KERNEL_DIR}
 	ARCH=arm64
