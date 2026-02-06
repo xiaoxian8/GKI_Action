@@ -12,7 +12,7 @@ tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
 mv LLVM-20.1.8-Linux-X64 llvm20
 git clone https://android.googlesource.com/kernel/common -b android14-6.1-2024-10 --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
-git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=
+git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1 --depth=1
 git clone https://github.com/xiaoxian8/Unicode_bypass_Fix.git
 #自定义环境变量
@@ -123,7 +123,6 @@ args=(-j4
 	
 #定义默认配置
 make ${args[@]} gki_defconfig
-make ${args[@]} menuconfig
 
 #开始编译
 make ${args[@]} Image.lz4 modules
