@@ -106,20 +106,16 @@ args=(-j$(nproc --all)
     O=${OUT_DIR}
     -C ${KERNEL_DIR}
     ARCH=arm64
+	LLVM=1
+	LLVM_IAS=1
     CC=clang
     LD=ld.lld
     AR=llvm-ar
     NM=llvm-nm
-	AS=llvm-as
     STRIP=llvm-strip
     OBJCOPY=llvm-objcopy
     OBJDUMP=llvm-objdump
 	READELF=llvm-readelf
-    HOSTCC=clang
-    HOSTCXX=clang++
-    HOSTAR=llvm-ar
-    HOSTLD=ld.lld
-	HOSTAS=llvm-as
     DEOMOD=depmod
     DTC=dtc)
 	
