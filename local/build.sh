@@ -106,15 +106,10 @@ args=(-j$(nproc --all)
     O=${OUT_DIR}
     -C ${KERNEL_DIR}
     ARCH=arm64
+	CROSS_COMPILE=aarch64-linux-gnu-
+	CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
 	LLVM=1
 	LLVM_IAS=1
-    CC=clang
-    AR=llvm-ar
-    NM=llvm-nm
-    STRIP=llvm-strip
-    OBJCOPY=llvm-objcopy
-    OBJDUMP=llvm-objdump
-	READELF=llvm-readelf
     DEOMOD=depmod
     DTC=dtc)
 	
