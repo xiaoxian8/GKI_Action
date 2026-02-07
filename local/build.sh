@@ -106,12 +106,22 @@ args=(-j$(nproc --all)
     O=${OUT_DIR}
     -C ${KERNEL_DIR}
     ARCH=arm64
-    CROSS_COMPILE=aarch64-linux-gnu-
-    CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
-    LLVM=1
-    LLVM_IAS=1
-    DEPMOD=depmod
-    DTC=dtc )
+    CC=clang
+    LD=ld.lld
+    AR=llvm-ar
+    NM=llvm-nm
+	AS=llvm-as
+    STRIP=llvm-strip
+    OBJCOPY=llvm-objcopy
+    OBJDUMP=llvm-objdump
+	READELF=llvm-readelf
+    HOSTCC=clang
+    HOSTCXX=clang++
+    HOSTAR=llvm-ar
+    HOSTLD=ld.lld
+	HOSTAS=llvm-as
+    DEOMOD=depmod
+    DTC=dtc)
 	
 #定义默认配置
 make ${args[@]} gki_defconfig
