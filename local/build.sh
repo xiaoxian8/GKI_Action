@@ -37,8 +37,8 @@ patch -p1 -F3 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-an
 curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
 patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 
-patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
-cp ssg_patch/* ${KERNEL_DIR} -r
+#patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
+#cp ssg_patch/* ${KERNEL_DIR} -r
 
 patch -p1 -d ${KERNEL_DIR} < unicode_bypass_fix_6.1+.patch
 
@@ -54,10 +54,10 @@ CONFIG_LTO=y
 CONFIG_LOCALVERSION="-xiaoxian"
 EOF
 #添加ssg io调度
-cat >> "${DEFCONFIG_FILE}" <<EOF
-CONFIG_MQ_IOSCHED_SSG=y
-CONFIG_MQ_IOSCHED_SSG_CGROUP=y
-EOF
+#cat >> "${DEFCONFIG_FILE}" <<EOF
+#CONFIG_MQ_IOSCHED_SSG=y
+#CONFIG_MQ_IOSCHED_SSG_CGROUP=y
+#EOF
 
 #Mountify支持
 cat >> "${DEFCONFIG_FILE}" <<EOF
