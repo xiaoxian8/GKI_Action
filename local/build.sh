@@ -40,7 +40,7 @@ patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
 cp ssg_patch/* ${KERNEL_DIR} -r
 
-patch -p1 -d ${KERNEL_DIR} < Unicode_bypass_Fix/unicode-bypass_fix_5.10-6.12通用.patch
+patch -p1 -F3 -d ${KERNEL_DIR} < Unicode_bypass_Fix/unicode-bypass_fix_5.10-6.12通用.patch
 
 #添加LTO优化
 echo ">>> 添加LTO优化..."
