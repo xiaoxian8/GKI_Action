@@ -10,7 +10,7 @@ sudo apt-get install -y \
 wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
 tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
 mv LLVM-20.1.8-Linux-X64 llvm20
-git clone https://android.googlesource.com/kernel/common -b deprecated/android14-6.1-2023-10 --depth=1
+git clone https://android.googlesource.com/kernel/common -b deprecated/android14-6.1-2024-01 --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1 --depth=1
