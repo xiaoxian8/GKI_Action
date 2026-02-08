@@ -29,6 +29,8 @@ if grep -q " -dirty" "$KERNEL_DIR/scripts/setlocalversion"; then
 else
 	echo "-dirty 不存在，不执行修改"
 fi
+sed -i '$c\echo "-xiaoxian"' script.sh
+
 
 echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
@@ -51,7 +53,6 @@ CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN=y
 CONFIG_HAS_LTO_CLANG=y
 CONFIG_LTO_CLANG_THIN=y
 CONFIG_LTO=y
-CONFIG_LOCALVERSION="-xiaoxian"
 EOF
 #添加ssg io调度
 #cat >> "${DEFCONFIG_FILE}" <<EOF
