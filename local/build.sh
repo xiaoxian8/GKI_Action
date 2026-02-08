@@ -29,7 +29,7 @@ if grep -q " -dirty" "$KERNEL_DIR/scripts/setlocalversion"; then
 else
 	echo "-dirty 不存在，不执行修改"
 fi
-sed -i '$c\echo "-xiaoxian"' script.sh
+sed -i '$c\echo "-xiaoxian"' "$KERNEL_DIR/scripts/setlocalversion"
 
 
 echo "正在打入susfs补丁"
