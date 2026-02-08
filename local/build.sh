@@ -14,7 +14,7 @@ git clone https://android.googlesource.com/kernel/common -b deprecated/android14
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1 --depth=1
-git clone https://github.com/xiaoxian8/Unicode_bypass_Fix.git
+wget https://raw.githubusercontent.com/WildKernels/kernel_patches/refs/heads/main/common/unicode_bypass_fix_6.1%2B.patch
 #自定义环境变量
 export PATH=${PWD}/llvm20/bin:${PATH}
 export KERNEL_DIR=${PWD}/common
@@ -40,7 +40,7 @@ patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
 cp ssg_patch/* ${KERNEL_DIR} -r
 
-patch -p1 -d ${KERNEL_DIR} < Unicode_bypass_Fix/unicode-bypass_fix_5.10-6.12通用.patch
+patch -p1 -d ${KERNEL_DIR} < unicode_bypass_fix_6.1+.patch
 
 #添加LTO优化
 echo ">>> 添加LTO优化..."
