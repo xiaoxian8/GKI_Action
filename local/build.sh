@@ -5,7 +5,7 @@ set -euo pipefail
 sudo apt-get update
 sudo apt-get install -y \
     curl bison flex make binutils dwarves git lld pahole zip perl gcc python3 python-is-python3 \
-    bc libssl-dev libelf-dev device-tree-compiler kmod
+    bc libssl-dev libelf-dev device-tree-compiler kmod rustc
 
 wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
 tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
@@ -110,8 +110,20 @@ args=(-j$(nproc --all)
     ARCH=arm64
 	CROSS_COMPILE=aarch64-linux-gnu-
 	CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
-	LLVM=1
-	LLVM_IAS=1
+	CC=clang
+	LD=ld.lld
+	AR=llvm-ar 
+	NM=llvm-nm
+	AS=llvm-as
+	STRIP=llvm-strip
+	OBJCOPY=llvm-objcopy
+	OBJDUMP=llvm-objdump
+	READELF=llvm-readelf
+	HOSTCC=clang
+	HOSTCXX=clang++
+	HOSTAR=llvm-ar
+	HOSTLD=ld.lld
+	RUSTC=rustc
     DEOMOD=depmod
     DTC=dtc)
 	
