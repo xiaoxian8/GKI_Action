@@ -11,27 +11,6 @@ jobs:
       - name: 检查储存库
         uses: actions/checkout@v4
 
-      - name: 定义环境变量
-        run: |
-          mkdir -p local
-          BUILD_ENV="local/build.env"
-          GKI_DEV="${{ github.event.inputs.GKI_DEV }}"
-
-          # 提取前两段生成 GKI_VERSION
-          GKI_VERSION="gki-$(echo $GKI_DEV | cut -d'-' -f1-2)"
-
-          cat > $BUILD_ENV <<EOF
-          GKI_DEV=${GKI_DEV}
-          GKI_VERSION=${GKI_VERSION}
-          KSU_BRANCH=${{ github.event.inputs.KSU_BRANCH }}
-          APPLY_SSG=${{ github.event.inputs.APPLY_SSG }}
-          APPLY_BBR=${{ github.event.inputs.APPLY_BBR }}
-          APPLY_KPM=${{ github.event.inputs.APPLY_KPM }}
-          EOF
-
-          echo ">>> build.env 内容:"
-          cat $BUILD_ENV
-
       - name: 执行build.sh
         run: |
           chmod +x local/build.sh
