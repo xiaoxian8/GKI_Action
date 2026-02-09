@@ -2,27 +2,6 @@ name: 内核构建
 
 on:
   workflow_dispatch:
-    inputs:
-      GKI_DEV:
-        description: 'GKI 分支，例如 android14-6.1-2024-10 或 android14-6.1'
-        required: true
-        default: 'android14-6.1-2024-10'
-      KSU_BRANCH:
-        description: '使用 SukiSU Ultra/KernelSU Next? (y/n)'
-        required: true
-        default: 'y'
-      APPLY_SSG:
-        description: '启用 SSG IO 调度? (y/n)'
-        required: true
-        default: 'y'
-      APPLY_BBR:
-        description: '启用 BBR 拥塞控制? (y/n/d)'
-        required: true
-        default: 'd'
-      APPLY_KPM:
-        description: '启用 KPM ? (y/n)'
-        required: true
-        default: 'y'
 
 jobs:
   build:
