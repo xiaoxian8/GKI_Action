@@ -7,9 +7,15 @@ sudo apt-get install -y \
     curl bison flex make binutils dwarves git lld pahole zip perl gcc python3 python-is-python3 \
     bc libssl-dev libelf-dev device-tree-compiler kmod
 
-wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
-tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
-mv LLVM-20.1.8-Linux-X64 llvm20
+#wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
+#tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
+#mv LLVM-20.1.8-Linux-X64 llvm20
+
+mkdir llvm20 && cd llvm20
+wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android14-release/clang-r487747c.tar.gz
+tar -zxf clang-r487747c.tar.gz
+cd ..
+
 git clone https://android.googlesource.com/kernel/common -b deprecated/android14-6.1-2024-05 --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
