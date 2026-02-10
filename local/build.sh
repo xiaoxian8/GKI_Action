@@ -11,7 +11,7 @@ wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LL
 tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
 mv LLVM-20.1.8-Linux-X64 llvm20
 
-git clone https://android.googlesource.com/kernel/common -b deprecated/android14-6.1-2023-10 --depth=1
+git clone https://android.googlesource.com/kernel/common -b android14-6.1-2023-05-exp --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1 --depth=1
@@ -37,11 +37,11 @@ echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
 patch -p1 -F3 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-android14-6.1.patch
 
-# curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
-# patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
+curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
+patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-patch -p1 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+#curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
+#patch -p1 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
 
 cp ssg_patch/block ${KERNEL_DIR} -r
 patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
