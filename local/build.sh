@@ -158,7 +158,7 @@ cd ..
 
 #打包boot.img
 python3 mkboot/mkbootimg.py \
-    --kernel out/arch/arm64/boot/Image.lz4 \
+    --kernel out/arch/arm64/boot/Image \
 	--header_version 4 \
 	--os_version 0 \
 	--os_patch_level 0 \
