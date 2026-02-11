@@ -149,9 +149,8 @@ make ${args[@]} Image.lz4 modules
 #生成modules_install
 make ${args[@]} INSTALL_MOD_PATH=modules modules_install
 
-#打包Ak3
-mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
-cp -v Image AnyKernel3/Image
+#打包AnyKernel3刷机包
+cp -v ${OUT_DIR}/arch/arm64/boot/Image AnyKernel3/Image
 cd AnyKernel3
 zip -r9v ${OUT_DIR}/kernel.zip *
 cd ..
