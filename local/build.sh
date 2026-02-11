@@ -10,6 +10,7 @@ sudo apt-get install -y \
 wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
 tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
 mv LLVM-20.1.8-Linux-X64 llvm20
+
 mkdir mkboot
 cd mkboot
 wget -q https://android.googlesource.com/platform/system/tools/mkbootimg/+archive/refs/heads/main.tar.gz
@@ -153,6 +154,7 @@ mv ${OUT_DIR}/arch/arm64/boot/Image ./Image
 mv -v Image AnyKernel3/Image
 cd AnyKernel3
 zip -r9v ${OUT_DIR}/kernel.zip *
+cd ..
 
 #打包boot.img
 python3 mkboot/mkbootimg.py \
