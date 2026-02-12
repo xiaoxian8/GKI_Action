@@ -170,11 +170,11 @@ $MKBOOTIMG \
 	--header_version 4 \
 	--pagesize 4096 \
 	-o out/boot.img
-$AVBTOOL \
-    add_hash_footer \
+$AVBTOOL add_hash_footer \
 	--partition_name boot \
 	--partition_size $((64 * 1024 * 1024)) \
-	--image out/boot.img --algorithm SHA256_RSA2048 \
+	--image out/boot.img \
+	--algorithm SHA256_RSA2048 \
 	--key $BOOT_SIGN_KEY_PATH
 #预留，将来更新
 #--ramdisk ramdisk.cpio.lz4 \
