@@ -26,7 +26,7 @@ wget https://raw.githubusercontent.com/WildKernels/kernel_patches/refs/heads/mai
 export PATH=${PWD}/llvm20/bin:${PATH}
 export AVBTOOL=${PWD}/build-tools/linux-x86/bin/avbtool
 export MKBOOTIMG=${PWD}/mkbootimg/mkbootimg.py
-export BOOT_SIGN_KEY_PATH=${PWD}/kernel-build-tools/linux-x86/share/avb/testkey_rsa2048.pem
+export BOOT_SIGN_KEY_PATH=${PWD}/build-tools/linux-x86/share/avb/testkey_rsa2048.pem
 export KERNEL_DIR=${PWD}/common
 export OUT_DIR=${PWD}/out
 export DEFCONFIG_FILE=${PWD}/common/arch/arm64/configs/gki_defconfig
