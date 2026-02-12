@@ -11,19 +11,22 @@ wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LL
 tar -Jxf LLVM-20.1.8-Linux-X64.tar.xz
 mv LLVM-20.1.8-Linux-X64 llvm20
 
-mkdir mkboot
-cd mkboot
-wget -q https://android.googlesource.com/platform/system/tools/mkbootimg/+archive/refs/heads/main.tar.gz
-tar -zxvf main.tar.gz
-cd ..
+#下载谷歌构建工具
+git clone https://android.googlesource.com/kernel/prebuilts/build-tools -b main-kernel-2025 --depth=1
+git clone https://android.googlesource.com/platform/system/tools/mkbootimg -b main-kernel-2025 --depth=1
 
+#下载内核以及补丁
 git clone https://android.googlesource.com/kernel/common -b android14-6.1-2024-10 --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1 --depth=1
 wget https://raw.githubusercontent.com/WildKernels/kernel_patches/refs/heads/main/common/unicode_bypass_fix_6.1%2B.patch
+
 #自定义环境变量
 export PATH=${PWD}/llvm20/bin:${PATH}
+export AVBTOOL=${PWD}/build-tools/linux-x86/bin/avbtool
+export MKBOOTIMG=${PWD}/mkbootimg/mkbootimg.py
+export BOOT_SIGN_KEY_PATH=${PWD}/kernel-build-tools/linux-x86/share/avb/testkey_rsa2048.pem
 export KERNEL_DIR=${PWD}/common
 export OUT_DIR=${PWD}/out
 export DEFCONFIG_FILE=${PWD}/common/arch/arm64/configs/gki_defconfig
@@ -165,12 +168,16 @@ cd AnyKernel3
 zip -r9v ${OUT_DIR}/kernel.zip *
 cd ..
 
-#打包boot.img
-#python3 mkboot/mkbootimg.py \
-#    --kernel out/arch/arm64/boot/Image \
-#	--header_version 4 \
-#	-o out/boot.img
-#
 
+$MKBOOTIMG \
+    --kernel out/arch/arm64/boot/Image \
+	--header_version 4 \
+	-o out/boot.img
+$AVBTOOL \
+    add_hash_footer \
+	--partition_name boot \
+	--partition_size $((64 * 1024 * 1024)) \
+	--image out/boot.img --algorithm SHA256_RSA2048 \
+	--key $BOOT_SIGN_KEY_PATH
 #预留，将来更新
 #--ramdisk ramdisk.cpio.lz4 \
