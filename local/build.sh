@@ -168,6 +168,7 @@ cd ..
 $MKBOOTIMG \
     --kernel out/arch/arm64/boot/Image \
 	--header_version 4 \
+	--pagesize 0 \
 	-o out/boot.img
 $AVBTOOL \
     add_hash_footer \
