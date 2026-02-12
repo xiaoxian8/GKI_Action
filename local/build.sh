@@ -54,8 +54,18 @@ patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
 
 patch -p1 -d ${KERNEL_DIR} < unicode_bypass_fix_6.1+.patch
 
+#添加内核编译优化
+cat >> "${DEFCONFIG_FILE}" <<EOF
+CONFIG_ARCH_BCM=n
+CONFIG_ARCH_BRCMSTB=n
+CONFIG_ARCH_TEGRA=n
+CONFIG_PM_DEBUG=n
+CONFIG_PM_ADVANCED_DEBUG=n
+CONFIG_PM_SLEEP_DEBUG=n
+CONFIG_CPU_MITIGATIONS=n
+EOF
+
 #添加LTO优化
-echo ">>> 添加LTO优化..."
 cat >> "${DEFCONFIG_FILE}" <<EOF
 CONFIG_LTO_CLANG=y
 CONFIG_ARCH_SUPPORTS_LTO_CLANG=y
@@ -156,14 +166,14 @@ zip -r9v ${OUT_DIR}/kernel.zip *
 cd ..
 
 #打包boot.img
-python3 mkboot/mkbootimg.py \
-    --kernel out/arch/arm64/boot/Image \
-	--header_version 4 \
-	--os_version 0 \
-	--os_patch_level 0 \
-	--pagesize 4096 \
-	-o out/boot.img
-truncate -s 67108864 out/boot.img
+#python3 mkboot/mkbootimg.py \
+#    --kernel out/arch/arm64/boot/Image \
+#	--header_version 4 \
+#	--os_version 0 \
+#	--os_patch_level 0 \
+#	--pagesize 4096 \
+#	-o out/boot.img
+#truncate -s 67108864 out/boot.img
 
 #预留，将来更新
 #--ramdisk ramdisk.cpio.lz4 \
