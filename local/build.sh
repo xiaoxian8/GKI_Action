@@ -146,7 +146,7 @@ args=(-j$(nproc --all)
 	HOSTAR=llvm-ar
 	HOSTLD=ld.lld
 	RUSTC=rustc
-    DEOMOD=depmod
+    DEPMOD=depmod
     DTC=dtc)
 	
 #定义默认配置
