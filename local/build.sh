@@ -169,11 +169,8 @@ cd ..
 #python3 mkboot/mkbootimg.py \
 #    --kernel out/arch/arm64/boot/Image \
 #	--header_version 4 \
-#	--os_version 0 \
-#	--os_patch_level 0 \
-#	--pagesize 4096 \
 #	-o out/boot.img
-#truncate -s 67108864 out/boot.img
+#
 
 #预留，将来更新
 #--ramdisk ramdisk.cpio.lz4 \
