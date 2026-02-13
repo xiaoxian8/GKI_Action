@@ -50,7 +50,7 @@ patch -p1 -F3 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-an
 #patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-patch p1 -d -F3 ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+patch p1 -F3 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
 
 
 #curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
