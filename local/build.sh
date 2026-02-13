@@ -44,10 +44,14 @@ sed -i '$c\echo "-xiaoxian"' "$KERNEL_DIR/scripts/setlocalversion"
 
 echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
-patch -p1 -F3 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-android14-6.1.patch
+patch -p1 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-android14-6.1.patch
 
-curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
-patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
+#curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
+#patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
+
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
+patch p1 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+
 
 #curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
 #patch -p1 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
@@ -56,6 +60,25 @@ cp ssg_patch/block ${KERNEL_DIR} -r
 patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
 
 patch -p1 -d ${KERNEL_DIR} < unicode_bypass_fix_6.1+.patch
+
+#添加KernelSU默认配置
+cat >> "${DEFCONFIG_FILE}" <<EOF
+# KernelSU
+CONFIG_KSU=y
+CONFIG_KSU_DEBUG=n
+
+# KernelSU - SUSFS
+CONFIG_KSU_SUSFS=y
+CONFIG_KSU_SUSFS_SUS_PATH=y
+CONFIG_KSU_SUSFS_SUS_MOUNT=y
+CONFIG_KSU_SUSFS_SUS_KSTAT=y
+CONFIG_KSU_SUSFS_SPOOF_UNAME=y
+CONFIG_KSU_SUSFS_ENABLE_LOG=y
+CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y
+CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y
+CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
+CONFIG_KSU_SUSFS_SUS_MAP=y
+EOF
 
 #添加内核编译优化
 cat >> "${DEFCONFIG_FILE}" <<EOF
