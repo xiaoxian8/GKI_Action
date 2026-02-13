@@ -19,7 +19,7 @@ git clone https://android.googlesource.com/platform/system/tools/mkbootimg -b ma
 git clone https://android.googlesource.com/kernel/common -b android14-6.1-2024-10 --depth=1
 git clone https://github.com/xiaoxian8/ssg_patch.git --depth=1
 git clone https://github.com/xiaoxian8/AnyKernel3.git --depth=1
-git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1
+git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-android14-6.1 --depth=1
 wget https://raw.githubusercontent.com/WildKernels/kernel_patches/refs/heads/main/common/unicode_bypass_fix_6.1%2B.patch
 
 #自定义环境变量
@@ -42,6 +42,7 @@ fi
 sed -i '$c\echo "-xiaoxian"' "$KERNEL_DIR/scripts/setlocalversion"
 
 cd susfs4ksu
+git fetch origin 698d47c3a2b20c65a6f87d18da32babca1775758
 git reset --hard 698d47c3a2b20c65a6f87d18da32babca1775758
 cd ..
 
