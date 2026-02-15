@@ -41,10 +41,10 @@ else
 fi
 sed -i '$c\echo "-xiaoxian"' "$KERNEL_DIR/scripts/setlocalversion"
 
-#cd susfs4ksu
-#git fetch origin 698d47c3a2b20c65a6f87d18da32babca1775758
-#git reset --hard 698d47c3a2b20c65a6f87d18da32babca1775758
-#cd ..
+cd susfs4ksu
+git fetch origin 698d47c3a2b20c65a6f87d18da32babca1775758
+git reset --hard 698d47c3a2b20c65a6f87d18da32babca1775758
+cd ..
 
 echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
