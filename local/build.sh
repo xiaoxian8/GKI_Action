@@ -41,6 +41,13 @@ else
 fi
 sed -i '$c\echo "-xiaoxian"' "$KERNEL_DIR/scripts/setlocalversion"
 
+
+#curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
+#patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
+
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
+patch -p1 -F3 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+
 cd susfs4ksu
 git fetch origin 698d47c3a2b20c65a6f87d18da32babca1775758
 git reset --hard 698d47c3a2b20c65a6f87d18da32babca1775758
@@ -50,11 +57,6 @@ echo "正在打入susfs补丁"
 cp susfs4ksu/kernel_patches/* ${KERNEL_DIR} -r
 patch -p1 -F3 -d ${KERNEL_DIR} < susfs4ksu/kernel_patches/50_add_susfs_in_gki-android14-6.1.patch
 
-#curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
-#patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
-
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-patch -p1 -F3 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
 
 cp ssg_patch/block ${KERNEL_DIR} -r
 patch -p1 -d ${KERNEL_DIR} < ssg_patch/ssg.patch
