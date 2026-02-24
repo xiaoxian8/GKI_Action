@@ -45,8 +45,10 @@ sed -i '$c\echo "-xiaoxian"' "$KERNEL_DIR/scripts/setlocalversion"
 #curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s dev
 #patch -p1 -d ${PWD}/KernelSU-Next < next-susfs.patch
 
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-patch -p1 -F3 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+#curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
+#patch -p1 -F3 -d ${PWD}/KernelSU < susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch
+
+curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash
 
 #cd susfs4ksu
 #git fetch origin 698d47c3a2b20c65a6f87d18da32babca1775758
@@ -68,6 +70,7 @@ cat >> "${DEFCONFIG_FILE}" <<EOF
 # KernelSU
 CONFIG_KSU=y
 CONFIG_KSU_DEBUG=n
+CONFIG_KPM=y
 
 # KernelSU - SUSFS
 CONFIG_KSU_SUSFS=y
